@@ -14,11 +14,10 @@ class CourseService implements CourseServiceInterface
         $this->courseRepository = $courseRepository;
     }
 
-    public function getAll()
+    public function getAll($request)
     {
-        return $this->courseRepository->getAll();
+        return $this->courseRepository->getAll($request);
     }
-
     public function findById($id)
     {
         $course = $this->courseRepository->findById($id);
@@ -30,7 +29,7 @@ class CourseService implements CourseServiceInterface
 
         return [
             'statusCode' => $statusCode,
-            'courses' => $course
+            'item' => $course
         ];
     }
 
@@ -45,7 +44,7 @@ class CourseService implements CourseServiceInterface
 
         return [
             'statusCode' => $statusCode,
-            'courses' => $course
+            'item' => $course
         ];
     }
 
@@ -63,7 +62,7 @@ class CourseService implements CourseServiceInterface
 
         return [
             'statusCode' => $statusCode,
-            'courses' => $newCustomer
+            'item' => $newCustomer
         ];
     }
 
@@ -84,4 +83,20 @@ class CourseService implements CourseServiceInterface
             'message' => $message
         ];
     }
+
+    public function findBySlug($id)
+    {
+        $course = $this->courseRepository->findBySlug($id);
+
+        $statusCode = 200;
+        if (!$course) {
+            $statusCode = 404;
+        }
+
+        return [
+            'statusCode' => $statusCode,
+            'item' => $course
+        ];
+    }
+
 }

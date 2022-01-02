@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 
@@ -23,9 +25,9 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = $this->courseService->getAll();
+        $items = $this->courseService->getAll($request);
         return response()->json($items, 200);
     }
 
@@ -56,9 +58,15 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
-    {
-        //
+    public function show($slug)
+    {   
+        if( is_numeric($slug) ){
+            $item = $this->courseService->findById($slug);
+        }else{
+            $item = $this->courseService->findBySlug($slug);
+        }
+       
+        return response()->json($item, 200);
     }
 
     /**
@@ -81,7 +89,7 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+        dd( $course );
     }
 
     /**
