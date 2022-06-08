@@ -14,9 +14,10 @@ class CourseSeeder extends Seeder
      */
     public function run()
     {
-        $data = file_get_contents('https://api-gateway.fullstack.edu.vn/api/courses/featured');
+        $url = 'https://api-gateway.fullstack.edu.vn/api/combined-courses';
+        $data = file_get_contents($url);
         $data = json_decode($data);
-        $items = $data->data;
+        $items = $data->data->free_courses;
 
         DB::table('courses')->truncate();
         DB::table('tracks')->truncate();
