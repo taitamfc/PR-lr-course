@@ -8,11 +8,11 @@ use App\Models\Requirement;
 
 class RequirementController extends Controller
 {
-    protected $courseRepository;
+    protected $requirementsRepository;
 
-    public function __construct($courseRepository)
+    public function __construct($requirementsRepository)
     {
-        $this->courseRepository = $courseRepository;
+        $this->requirementsRepository = $requirementsRepository;
     }
     /**
      * Display a listing of the resource.
