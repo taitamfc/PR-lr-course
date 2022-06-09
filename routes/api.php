@@ -15,9 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\StepController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 Route::resource('courses', CourseController::class);
+Route::resource('step', StepController::class);

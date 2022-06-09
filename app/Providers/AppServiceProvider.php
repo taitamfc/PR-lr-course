@@ -12,6 +12,12 @@ use App\Repositories\Eloquent\CourseRepository;
 
 use App\Repositories\Interfaces\RepositoryInterface;
 use App\Repositories\Eloquent\EloquentRepository;
+//Step
+use App\Services\Interfaces\StepServiceInterface;
+use App\Services\StepService;
+
+use App\Repositories\Interfaces\StepInterface;
+use App\Repositories\Eloquent\StepRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,10 +33,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(RepositoryInterface::class, EloquentRepository::class);
         //CourseInterface - CourseRepository
         $this->app->singleton(CourseInterface::class, CourseRepository::class);
-
         /* Binding  Service*/
         $this->app->singleton(CourseServiceInterface::class, CourseService::class);
         
+     
+        //StepInterface - StepRepository
+        $this->app->singleton(StepInterface::class, StepRepository::class);
+        /* Binding  Service*/
+        $this->app->singleton(StepServiceInterface::class, StepService::class);
     }
 
     /**

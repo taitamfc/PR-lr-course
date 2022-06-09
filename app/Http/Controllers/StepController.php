@@ -2,20 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreStepRequest;
+use Illuminate\Http\Request;
+
 use App\Http\Requests\UpdateStepRequest;
+use App\Http\Requests\StoreStepRequest;
+
+use App\Services\Interfaces\StepServiceInterface;
 use App\Models\Step;
+
 
 class StepController extends Controller
 {
+    protected $stepService;
+
+    public function __construct(StepServiceInterface $stepService ){
+        $this->stepService = $stepService;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $items = $this->stepService->getAll($request);
+        return response()->json($items,200);
     }
 
     /**
