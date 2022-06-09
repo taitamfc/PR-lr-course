@@ -20,83 +20,29 @@ class CourseService implements CourseServiceInterface
     }
     public function findById($id)
     {
-        $course = $this->courseRepository->findById($id);
-
-        $statusCode = 200;
-        if (!$course) {
-            $statusCode = 404;
-        }
-
-        return [
-            'statusCode' => $statusCode,
-            'item' => $course
-        ];
+        return $this->courseRepository->findById($id);
     }
 
     public function create($request)
     {
-        $course = $this->courseRepository->create($request);
-
-        $statusCode = 201;
-        if (!$course) {
-            $statusCode = 500;
-        }
-
-        return [
-            'statusCode' => $statusCode,
-            'item' => $course
-        ];
+        $this->courseRepository->create($request);
     }
 
     public function update($request, $id)
     {
-        $oldCustomer = $this->courseRepository->findById($id);
-
-        if (!$oldCustomer) {
-            $newCustomer = null;
-            $statusCode = 404;
-        } else {
-            $newCustomer = $this->courseRepository->update($request, $oldCustomer);
-            $statusCode = 200;
-        }
-
-        return [
-            'statusCode' => $statusCode,
-            'item' => $newCustomer
-        ];
+        $course = $this->courseRepository->findById($id);
+        $this->courseRepository->update($request, $course);
     }
 
     public function destroy($id)
     {
         $course = $this->courseRepository->findById($id);
-
-        $statusCode = 404;
-        $message = "User not found";
-        if ($course) {
-            $this->courseRepository->destroy($course);
-            $statusCode = 200;
-            $message = "Delete success!";
-        }
-
-        return [
-            'statusCode' => $statusCode,
-            'message' => $message
-        ];
+        $this->courseRepository->destroy($course);
     }
 
     public function findBySlug($id)
     {
-        $course = $this->courseRepository->findBySlug($id);
-
-        $statusCode = 200;
-        if (!$course) {
-            $statusCode = 404;
-        }
-
-        return [
-            'statusCode' => $statusCode,
-            'item' => $course
-        ];
+        return $this->courseRepository->findBySlug($id);
     }
 
 }
