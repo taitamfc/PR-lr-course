@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRequirementRequest;
 use App\Http\Requests\UpdateRequirementRequest;
 use App\Models\Requirement;
+use App\Services\Interfaces\RequirementServiceInterface;
+use Illuminate\Http\Client\Request;
 
 class RequirementController extends Controller
 {
     protected $requirementsRepository;
 
-    public function __construct($requirementsRepository)
+    public function __construct(RequirementServiceInterface $requirementsRepository)
     {
         $this->requirementsRepository = $requirementsRepository;
     }
@@ -19,9 +21,10 @@ class RequirementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $items = $this->requirementsRepository->getAll($request);
+        return response()->json($items, 200);
     }
 
     /**
@@ -51,9 +54,15 @@ class RequirementController extends Controller
      * @param  \App\Models\Requirement  $requirement
      * @return \Illuminate\Http\Response
      */
-    public function show(Requirement $requirement)
+    public function show(Requirement $requirement, $slug)
     {
-        //
+        if (is_numeric($slug)) {
+            $item = $this->requirementsRepository->findById($slug);
+        } else {
+            $item = $this->requirementsRepository->findBySlug($slug);
+        }
+
+        return response()->json($item, 200);
     }
 
     /**
@@ -76,7 +85,7 @@ class RequirementController extends Controller
      */
     public function update(UpdateRequirementRequest $request, Requirement $requirement)
     {
-        //
+        dd($requirement);
     }
 
     /**
