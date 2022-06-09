@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Interfaces;
 
-interface CourseServiceInterface extends Service{
+interface CourseServiceInterface extends Service 
+{
     
 }
